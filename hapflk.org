@@ -1,0 +1,16 @@
+#+OPTIONS: num:nil toc:nil
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_TRANS: none
+#+REVEAL_THEME: beige
+#+Title: hapFLK: a gentle introduction
+#+Author: Bertrand Servin
+#+Email: bertrand.servin@inra.fr
+
+
+* Principle
+This is the principle slide
+
+* Methods
+This is the methods slide
+
+A method slide as math : $$ \rho=4 N c $$
