@@ -46,7 +46,7 @@ install.packages("ape")
 
 #### Install hapFLK
 
-hapflk is available as a python package. Before installing hapflk, you will need to install [python 2.7](https://www.python.org/downloads/), [numpy and scipy](https://www.scipy.org/install.html) and have a C compiler available on your system. Once this is done, hapflk can be installed using pip (copy paste the following in a terminal):
+hapflk is available as a python package. It has been tested to run on Linux and Mac OS. Before installing hapflk, you will need to install [python 2.7](https://www.python.org/downloads/), [numpy and scipy](https://www.scipy.org/install.html) and have a C compiler available on your system (it should be the case). Once this is done, hapflk can be installed using pip (copy paste the following in a terminal):
 
 ```
 sudo pip install hapflk
