@@ -46,25 +46,6 @@ This is done by running:
 hapflk --bfile practical/data/NEU --outgroup=Soay -p practical/NEU
 #+END_SRC
 
-#+RESULTS[3679cbbaf3d3d4fbdb15b911b68a55355289c6e5]:
-|   Start | @                 | 2017-09-05 |    14:38:19 |          |           |          |             |            |          |      |
-|       1 | 0                 | [          |    00:00:00 | ]        | Reading   | Input    | Files       |            |          |      |
-|       2 | 0                 | [          |    00:00:55 | ]        | Computing | Allele   | Frequencies |            |          |      |
-|         | Galway:           | 49         | individuals |          |           |          |             |            |          |      |
-|         | ScottishTexel:    | 80         | individuals |          |           |          |             |            |          |      |
-|         | IrishSuffolk:     | 55         | individuals |          |           |          |             |            |          |      |
-|         | Soay:             | 110        | individuals |          |           |          |             |            |          |      |
-|         | WARNING:          | Found      |         740 | SNPs     | with      | no       | info        |         on |      pop | Soay |
-|         | NewZealandTexel:  | 21         | individuals |          |           |          |             |            |          |      |
-|         | GermanTexel:      | 43         | individuals |          |           |          |             |            |          |      |
-|         | NewZealandRomney: | 21         | individuals |          |           |          |             |            |          |      |
-|         |                   |            |             |          |           |          |             |            |          |      |
-|       3 | 0                 | [          |    00:01:41 | ]        | Computing | Reynolds | distances   |            |          |      |
-|       4 | 0                 | [          |    00:01:41 | ]        | Computing | Kinship  | Matrix      |            |          |      |
-| Rooting | with              | Soay       |         and | dropping | it.       |          |             |            |          |      |
-|       5 | 0                 | [          |    00:01:41 | ]        | Computing | FLK      | tests       |            |          |      |
-|       6 | 0                 | [          |    00:01:49 | ]        | Writing   | down     | results     |            |          |      |
-|       7 | 0                 | [          |    00:01:53 | ]        | The       | End      | @           | 2017-09-05 | 14:40:12 |      |
 Which should take ~ 2 minutes.
 
 #+REVEAL: split
