@@ -12,28 +12,29 @@
 
 
 * Principle of the (hap)FLK tests
-This is the principle slide
+This is the principle section
 
 * Software overview
   - =hapflk= is a python program that is meant to be used on the command
     line.
   - Input files should be in =plink= format. Preferably binary
     ={bed,bim,fam}= files.
-  - 
+  - First column (FID column) must indicate the population of origin
+    of an individual
 
 * Practical
 
 For this practical we will analyse data from
 [[http://www.sheephapmap.org/hapmap.php][The SheepHapMap project]]. First download the data:
 #+BEGIN_SRC sh
-mkdir -p practical/data/
-## get input files into practical directory
-wget ...
+  mkdir -p practical/hapflk/data/
+  ## get input files into practical directory (TODO)
+  ##wget ...
 #+END_SRC
 
 #+RESULTS:
 
-- These data consists in 6 populations from Northern Europe.
+- These data consists in 7 populations from Northern Europe.
 - One of them, the Soay, will be considered as an outgroup.
 ** Estimating population history from SNP data
 The first task will be aimed at running hapflk in SNP mode, to:
@@ -43,7 +44,7 @@ The first task will be aimed at running hapflk in SNP mode, to:
 - Calculate FLK tests
 This is done by running:
 #+BEGIN_SRC sh :cache yes
-hapflk --bfile practical/data/NEU --outgroup=Soay -p practical/NEU
+hapflk --bfile practical/hapflk/data/NEU --outgroup=Soay -p practical/hapflk/NEU
 #+END_SRC
 
 Which should take ~ 2 minutes.
@@ -51,23 +52,17 @@ Which should take ~ 2 minutes.
 #+REVEAL: split
 This leads to the following output files:
 #+BEGIN_SRC sh :exports both :results pp
-ls practical/NEU*
+ls practical/hapflk/NEU*
 #+END_SRC
 
 #+RESULTS:
-: practical/NEU_fij.txt
-: practical/NEU.flk
-: practical/NEU.frq
-: practical/NEU_reynolds.txt
-: practical/NEU_tree.txt
 
 Let's look at  the population tree (=NEU_tree.txt=). 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 70%">
 #+HEADER: :width 4 :height 4 :units "in" :res 100
-#+BEGIN_SRC R :results output graphics :file kinship.png
+#+BEGIN_SRC R :results output graphics :file practical/hapflk/kinship.png
 library(ape)
-setwd('./practical')
-neu.t=read.tree('NEU_tree.txt')
+neu.t=read.tree('practical/hapflk/NEU_tree.txt')
 plot(neu.t,align=T)
 axis(1,line=1.5)
 title(xlab='F')
@@ -79,10 +74,56 @@ Notice that the outgroup (Soay) has been removed.
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 30%">
-[[file:practical/kinship.png]]
+[[file:practical/hapflk/kinship.png]]
 #+REVEAL_HTML: </div>
 
 #+REVEAL: split
 The kinship file contains the (co)variance matrix of allele
 frequencies estimated with all SNPs.
-#+INCLUDE: "./practical/NEU_fij.txt" raw
+#+BEGIN_SRC R :exports results :output code :rownames yes
+  kin=as.matrix(read.table('practical/hapflk/NEU_fij.txt',row.names=1))
+  print(round(kin,digits=3))
+#+END_SRC
+
+#+RESULTS:
+| ScottishTexel    | 0.175 | 0.091 | 0.085 | 0.037 | 0.015 |     0 |
+| NewZealandTexel  | 0.091 | 0.161 | 0.085 | 0.037 | 0.015 |     0 |
+| GermanTexel      | 0.085 | 0.085 | 0.119 | 0.037 | 0.015 |     0 |
+| Galway           | 0.037 | 0.037 | 0.037 | 0.155 | 0.015 |     0 |
+| NewZealandRomney | 0.015 | 0.015 | 0.015 | 0.015 | 0.125 |     0 |
+| IrishSuffolk     |     0 |     0 |     0 |     0 |     0 | 0.159 |
+
+#+REVEAL: split
+The =NEU.flk= file contains results of the FLK test.
+
+
+We can check the fit of the model by verifying that the empirical
+distribution of FLK is close to a $\chi^2(5)$ 
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 70%">
+#+BEGIN_SRC R :session flk :exports code :results output graphics :file practical/hapflk/flkdist.png
+  flk=read.table('practical/hapflk/NEU.flk',h=T)
+  hist(flk$flk,n=100,f=F)
+  xx=seq(0,50,0.01)
+  lines(xx,dchisq(xx,df=5),lwd=2,col=2)
+#+END_SRC
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 30%">
+[[file:practical/hapflk/flkdist.png]]
+#+REVEAL_HTML: </div>
+** Running hapFLK on a (bit of) chromosome
+- hapFLK is a test based on LD patterns.
+- LD patterns are relevant within linked markers
+- So hapFLK needs to be calculated independantly for each chromosome :)
+- To reduce computation time, we will practice on a small, non random
+  region of a chromosome
+- We use plink to create our reduced dataset:
+#+BEGIN_SRC sh 
+  plink --sheep --bfile practical/data/NEU \
+        --chr 2 --from-kb 100000 --to-kb 140000\
+        --out practical/data/mstn --make-bed
+#+END_SRC
+- We could use =hapflk=, but that would be much longer.
+
