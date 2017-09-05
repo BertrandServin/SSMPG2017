@@ -56,6 +56,11 @@ ls practical/hapflk/NEU*
 #+END_SRC
 
 #+RESULTS:
+: practical/hapflk/NEU_fij.txt
+: practical/hapflk/NEU.flk
+: practical/hapflk/NEU.frq
+: practical/hapflk/NEU_reynolds.txt
+: practical/hapflk/NEU_tree.txt
 
 Let's look at  the population tree (=NEU_tree.txt=). 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 70%">
@@ -69,7 +74,7 @@ title(xlab='F')
 #+END_SRC
 
 #+RESULTS:
-[[file:kinship.png]]
+[[file:practical/hapflk/kinship.png]]
 Notice that the outgroup (Soay) has been removed.
 #+REVEAL_HTML: </div>
 
@@ -93,6 +98,7 @@ frequencies estimated with all SNPs.
 | NewZealandRomney | 0.015 | 0.015 | 0.015 | 0.015 | 0.125 |     0 |
 | IrishSuffolk     |     0 |     0 |     0 |     0 |     0 | 0.159 |
 
+
 #+REVEAL: split
 The =NEU.flk= file contains results of the FLK test.
 
@@ -108,6 +114,9 @@ distribution of FLK is close to a $\chi^2(5)$
   lines(xx,dchisq(xx,df=5),lwd=2,col=2)
 #+END_SRC
 
+#+RESULTS:
+[[file:practical/hapflk/flkdist.png]]
+
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 30%">
@@ -121,9 +130,10 @@ distribution of FLK is close to a $\chi^2(5)$
   region of a chromosome
 - We use plink to create our reduced dataset:
 #+BEGIN_SRC sh 
-  plink --sheep --bfile practical/data/NEU \
+  plink --sheep --bfile practical/hapflk/data/NEU \
         --chr 2 --from-kb 100000 --to-kb 140000\
-        --out practical/data/mstn --make-bed
+        --out practical/hapflk/data/mstn --make-bed
 #+END_SRC
-- We could use =hapflk=, but that would be much longer.
+
+
 
