@@ -2,15 +2,106 @@
 #+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
 #+REVEAL_TRANS: none
 #+REVEAL_THEME: beige
+#+REVEAL_PLUGINS: (highlight)
+#+REVEAL_EXTRA_CSS: ./mystyle.css
+#+OPTIONS: reveal_center:nil timestamp:nil email:t
 #+Title: hapFLK: a gentle introduction
 #+Author: Bertrand Servin
 #+Email: bertrand.servin@inra.fr
+#+DATE: SSMPG Sept. 11-15 2017, Aussois, France
 
 
-* Principle
+* Principle of the (hap)FLK tests
 This is the principle slide
 
-* Methods
-This is the methods slide
+* Software overview
+  - =hapflk= is a python program that is meant to be used on the command
+    line.
+  - Input files should be in =plink= format. Preferably binary
+    ={bed,bim,fam}= files.
+  - 
 
-A method slide as math : $$ \rho=4 N c $$
+* Practical
+
+For this practical we will analyse data from
+[[http://www.sheephapmap.org/hapmap.php][The SheepHapMap project]]. First download the data:
+#+BEGIN_SRC sh
+mkdir -p practical/data/
+## get input files into practical directory
+wget ...
+#+END_SRC
+
+#+RESULTS:
+
+- These data consists in 6 populations from Northern Europe.
+- One of them, the Soay, will be considered as an outgroup.
+** Estimating population history from SNP data
+The first task will be aimed at running hapflk in SNP mode, to:
+- calculate allele frequency
+- estimate genetic distances between populations (Fsts)
+- build a population tree
+- Calculate FLK tests
+This is done by running:
+#+BEGIN_SRC sh :cache yes
+hapflk --bfile practical/data/NEU --outgroup=Soay -p practical/NEU
+#+END_SRC
+
+#+RESULTS[3679cbbaf3d3d4fbdb15b911b68a55355289c6e5]:
+|   Start | @                 | 2017-09-05 |    14:38:19 |          |           |          |             |            |          |      |
+|       1 | 0                 | [          |    00:00:00 | ]        | Reading   | Input    | Files       |            |          |      |
+|       2 | 0                 | [          |    00:00:55 | ]        | Computing | Allele   | Frequencies |            |          |      |
+|         | Galway:           | 49         | individuals |          |           |          |             |            |          |      |
+|         | ScottishTexel:    | 80         | individuals |          |           |          |             |            |          |      |
+|         | IrishSuffolk:     | 55         | individuals |          |           |          |             |            |          |      |
+|         | Soay:             | 110        | individuals |          |           |          |             |            |          |      |
+|         | WARNING:          | Found      |         740 | SNPs     | with      | no       | info        |         on |      pop | Soay |
+|         | NewZealandTexel:  | 21         | individuals |          |           |          |             |            |          |      |
+|         | GermanTexel:      | 43         | individuals |          |           |          |             |            |          |      |
+|         | NewZealandRomney: | 21         | individuals |          |           |          |             |            |          |      |
+|         |                   |            |             |          |           |          |             |            |          |      |
+|       3 | 0                 | [          |    00:01:41 | ]        | Computing | Reynolds | distances   |            |          |      |
+|       4 | 0                 | [          |    00:01:41 | ]        | Computing | Kinship  | Matrix      |            |          |      |
+| Rooting | with              | Soay       |         and | dropping | it.       |          |             |            |          |      |
+|       5 | 0                 | [          |    00:01:41 | ]        | Computing | FLK      | tests       |            |          |      |
+|       6 | 0                 | [          |    00:01:49 | ]        | Writing   | down     | results     |            |          |      |
+|       7 | 0                 | [          |    00:01:53 | ]        | The       | End      | @           | 2017-09-05 | 14:40:12 |      |
+Which should take ~ 2 minutes.
+
+#+REVEAL: split
+This leads to the following output files:
+#+BEGIN_SRC sh :exports both :results pp
+ls practical/NEU*
+#+END_SRC
+
+#+RESULTS:
+: practical/NEU_fij.txt
+: practical/NEU.flk
+: practical/NEU.frq
+: practical/NEU_reynolds.txt
+: practical/NEU_tree.txt
+
+Let's look at  the population tree (=NEU_tree.txt=). 
+#+REVEAL_HTML: <div class="column" style="float:left; width: 70%">
+#+HEADER: :width 4 :height 4 :units "in" :res 100
+#+BEGIN_SRC R :results output graphics :file kinship.png
+library(ape)
+setwd('./practical')
+neu.t=read.tree('NEU_tree.txt')
+plot(neu.t,align=T)
+axis(1,line=1.5)
+title(xlab='F')
+#+END_SRC
+
+#+RESULTS:
+[[file:kinship.png]]
+Notice that the outgroup (Soay) has been removed.
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 30%">
+[[file:practical/kinship.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL: split
+The kinship file contains the (co)variance matrix of allele
+frequencies estimated with all SNPs.
+#+INCLUDE: "./practical/NEU_fij.txt" raw
