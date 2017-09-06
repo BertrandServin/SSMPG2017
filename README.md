@@ -72,14 +72,20 @@ make clean all FC=ifort
 
 #### Install hapFLK
 
-hapflk is available as a python package. Before installing hapflk, you will need to install [python 2.7](https://www.python.org/downloads/), [numpy and scipy](https://www.scipy.org/install.html) and have a C compiler available on your system. Once this is done, hapflk can be installed using pip (copy paste the following in a terminal):
+hapflk is available as a python package. It has been tested to work on Linux and MacOSX. Before installing hapflk, you will need to install [python 2.7](https://www.python.org/downloads/) and [numpy and scipy](https://www.scipy.org/install.html). You also need a C compiler (/e.g./ gcc) but this should be the case already. Once this is done, hapflk can be installed using pip (copy paste the following in a terminal):
 
 ```
 sudo pip install hapflk
 ```
 
+In the future, hapflk can be upgraded using :
+
+```
+sudo pip install hapflk --upgrade
+```
+
 Checkout the [hapflk webpage](https://forge-dga.jouy.inra.fr/projects/hapflk/)
-for some more documentation and utility scripts.
+for some documentation and companion scripts.
 
 ##  2. Download datasets
 
