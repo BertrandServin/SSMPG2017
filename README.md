@@ -40,9 +40,9 @@ install.packages("rehh")
 install.packages("ape")
 ```
 
-### Install BAYPASS, hapFLK, SelEstim, SweeD
+### Install BAYPASS, SelEstim, SweeD
 
-**TO COMPLETE** by M Gautier, B Servin, R Vitalis, and P Pavlidis.
+**TO COMPLETE** by  R Vitalis, and P Pavlidis.
 
 #### Install hapFLK
 
