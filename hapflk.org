@@ -12,7 +12,85 @@
 
 
 * Principle of the (hap)FLK tests
-This is the principle section
+
+- FLK and hapFLK are tests aimed at detecting selection based on
+  population differentiation
+- The principle is:
+  1. Model the expected differences in allele frequencies betwen a
+     group of populations
+  2. Evaluate if "observed" differences at a particular locus are
+     consistent with this model.
+
+** Rationale
+Consider the trajectory of an allele through time in a population of
+finite size (here N=200)
+#+BEGIN_SRC R :session principle :exports none
+source('DiffusionWF.R')
+#+END_SRC
+#+header: :width 4 :height 4 :units "in" :res 100  :bg "transparent"
+#+BEGIN_SRC R :session principle :exports results :results output graphics :file practical/hapflk/ptraj.png
+  N=200
+  n=100
+
+  X=WFtrajectoires(0.5,N,n)[,1]
+  plot(1:(n+1),X,type='l',
+       ylim=c(0,1),lwd=2,
+       axes=F,
+       ylab='Allele frequency',
+       xlab='t (generations)')
+  axis(1)
+  axis(2)
+  points(0,0.5,pch=19,col=2)
+  text(0,0.6,expression(p[0]),adj=0,col=2)
+  points(n+1,X[n+1],pch=19)
+  text(n+1,X[n+1]+0.1,expression(p),adj=0)
+#+END_SRC
+
+#+RESULTS:
+[[file:practical/hapflk/ptraj.png]]
+
+#+REVEAL: split
+
+If we were to look at many loci starting from the same initial
+frequency $p_0$. 
+#+REVEAL_HTML: <div class="column" style="float:left; width: 40%">
+#+header: :width 4 :height 4 :units "in" :res 100  :bg "transparent"
+#+BEGIN_SRC R :session principle :exports results :results output graphics :file practical/hapflk/ptrajmulti.png
+
+  N=1000
+  n=100
+  r=1000
+  p.0=0.5
+
+  X.1000=as.matrix(WFtrajectoires(rep(p.0,r),N,n))
+  par(mar=c(5,4,1,2))
+  matplot(X.1000,type='l',
+          ylim=c(0,1),lwd=2,col=rgb(0,0,0,0.1),
+          axes=F,lty=1,xlim=c(0,n+10),
+          ylab='Allele frequency',
+          xlab='t (generations)')
+    axis(1)
+    axis(2)
+    points(0,p.0,pch=19,col=2)
+    text(0,0.6,expression(p[0]),adj=0,col=2)
+  abline(h=0.5,lwd=2,lty=2,col=2)
+  ss=sqrt((n/(2*N))*p.0*(1-p.0))
+  arrows(n+5,p.0-2*ss,n+5,p.0+2*ss,code=3,col=4,lwd=2,length=0.1)
+  text(n+5,p.0+0.1,'Var(p)',col=4,adj=-0.1,xpd=TRUE)
+#+END_SRC
+
+#+RESULTS:
+[[file:practical/hapflk/ptrajmulti.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%">
+The variance of the final frequencies depends on:
+- The number of generations (t)
+- The population size (N)
+- The initial allele frequency ($p_0$)
+
+$$Var(p) \approx \frac{t}{2N} p_0(1-p_0)$$
+#+REVEAL_HTML: </div>
 
 * Software overview
   - =hapflk= is a python program that is meant to be used on the command
