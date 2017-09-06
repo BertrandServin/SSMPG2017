@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>hapFLK: a gentle introduction</title>
+<meta name="author" content="(Bertrand Servin)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/beige.css" id="theme"/>
+
+<link rel="stylesheet" href="./mystyle.css"/>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">hapFLK: a gentle introduction</h1><h2 class="author">Bertrand Servin</h2><h2 class="email"><a href="mailto:bertrand.servin@inra.fr">bertrand.servin@inra.fr</a></h2><h2 class="date">SSMPG Sept. 11-15 2017, Aussois, France</h2>
+</section>
+
+
+<section>
+<section id="slide-org5718ab6">
+<h2 id="org5718ab6">Principle of the (hap)FLK tests</h2>
+<p>
+This is the principle section
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org33d3c6c">
+<h2 id="org33d3c6c">Software overview</h2>
+<ul>
+<li><code>hapflk</code> is a python program that is meant to be used on the command
+line.</li>
+<li>Input files should be in <code>plink</code> format. Preferably binary
+<code>{bed,bim,fam}</code> files.</li>
+<li>First column (FID column) must indicate the population of origin
+of an individual</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org5becee7">
+<h2 id="org5becee7">Practical</h2>
+<p>
+For this practical we will analyse data from
+<a href="http://www.sheephapmap.org/hapmap.php">The SheepHapMap project</a>. First download the data:
+</p>
+<div class="org-src-container">
+
+<pre><code class="sh" >mkdir -p practical/hapflk/data/
+## get input files into practical directory (TODO)
+##wget ...
+</code></pre>
+</div>
+
+<ul>
+<li>These data consists in 7 populations from Northern Europe.</li>
+<li>One of them, the Soay, will be considered as an outgroup.</li>
+
+</ul>
+</section>
+<section id="slide-org903b5b6">
+<h3 id="org903b5b6">Estimating population history from SNP data</h3>
+<p>
+The first task will be aimed at running hapflk in SNP mode, to:
+</p>
+<ul>
+<li>calculate allele frequency</li>
+<li>estimate genetic distances between populations (Fsts)</li>
+<li>build a population tree</li>
+<li>Calculate FLK tests</li>
+
+</ul>
+<p>
+This is done by running:
+</p>
+<div class="org-src-container">
+
+<pre><code class="sh" >hapflk --bfile practical/hapflk/data/NEU --outgroup=Soay -p practical/hapflk/NEU
+</code></pre>
+</div>
+
+<p>
+Which should take ~ 2 minutes.
+</p>
+
+</section>
+<section >
+<p>
+This leads to the following output files:
+</p>
+<div class="org-src-container">
+
+<pre><code class="sh" >ls practical/hapflk/NEU*
+</code></pre>
+</div>
+
+<pre class="example">
+practical/hapflk/NEU_fij.txt
+practical/hapflk/NEU.flk
+practical/hapflk/NEU.frq
+practical/hapflk/NEU_reynolds.txt
+practical/hapflk/NEU_tree.txt
+</pre>
+
+<p>
+Let&rsquo;s look at  the population tree (<code>NEU_tree.txt</code>). 
+</p>
+<div class="column" style="float:left; width: 70%">
+<div class="org-src-container">
+
+<pre><code class="R" >library(ape)
+neu.t=read.tree('practical/hapflk/NEU_tree.txt')
+plot(neu.t,align=T)
+axis(1,line=1.5)
+title(xlab='F')
+</code></pre>
+</div>
+<p>
+Notice that the outgroup (Soay) has been removed.
+</p>
+</div>
+
+<div class="column" style="float:right; width: 30%">
+
+<div class="figure">
+<p><img src="practical/hapflk/kinship.png" alt="kinship.png" />
+</p>
+</div>
+</div>
+
+</section>
+<section >
+<p>
+The kinship file contains the (co)variance matrix of allele
+frequencies estimated with all SNPs.
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">ScottishTexel</td>
+<td class="org-right">0.175</td>
+<td class="org-right">0.091</td>
+<td class="org-right">0.085</td>
+<td class="org-right">0.037</td>
+<td class="org-right">0.015</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">NewZealandTexel</td>
+<td class="org-right">0.091</td>
+<td class="org-right">0.161</td>
+<td class="org-right">0.085</td>
+<td class="org-right">0.037</td>
+<td class="org-right">0.015</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">GermanTexel</td>
+<td class="org-right">0.085</td>
+<td class="org-right">0.085</td>
+<td class="org-right">0.119</td>
+<td class="org-right">0.037</td>
+<td class="org-right">0.015</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">Galway</td>
+<td class="org-right">0.037</td>
+<td class="org-right">0.037</td>
+<td class="org-right">0.037</td>
+<td class="org-right">0.155</td>
+<td class="org-right">0.015</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">NewZealandRomney</td>
+<td class="org-right">0.015</td>
+<td class="org-right">0.015</td>
+<td class="org-right">0.015</td>
+<td class="org-right">0.015</td>
+<td class="org-right">0.125</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">IrishSuffolk</td>
+<td class="org-right">0</td>
+<td class="org-right">0</td>
+<td class="org-right">0</td>
+<td class="org-right">0</td>
+<td class="org-right">0</td>
+<td class="org-right">0.159</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+<section >
+<p>
+The <code>NEU.flk</code> file contains results of the FLK test.
+</p>
+
+
+<p>
+We can check the fit of the model by verifying that the empirical
+distribution of FLK is close to a \(\chi^2(5)\) 
+</p>
+
+<div class="column" style="float:left; width: 70%">
+<div class="org-src-container">
+
+<pre><code class="R" >flk=read.table('practical/hapflk/NEU.flk',h=T)
+hist(flk$flk,n=100,f=F)
+xx=seq(0,50,0.01)
+lines(xx,dchisq(xx,df=5),lwd=2,col=2)
+</code></pre>
+</div>
+
+</div>
+
+<div class="column" style="float:right; width: 30%">
+
+<div class="figure">
+<p><img src="practical/hapflk/flkdist.png" alt="flkdist.png" />
+</p>
+</div>
+</div>
+</section>
+<section id="slide-orgdad47e1">
+<h3 id="orgdad47e1">Running hapFLK on a (bit of) chromosome</h3>
+<ul>
+<li>hapFLK is a test based on LD patterns.</li>
+<li>LD patterns are relevant within linked markers</li>
+<li>So hapFLK needs to be calculated independantly for each chromosome :)</li>
+<li>To reduce computation time, we will practice on a small, non random
+region of a chromosome</li>
+<li>We use plink to create our reduced dataset:</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre><code class="sh" >plink --sheep --bfile practical/hapflk/data/NEU \
+      --chr 2 --from-kb 100000 --to-kb 140000\
+      --out practical/hapflk/data/mstn --make-bed
+</code></pre>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: false,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }]
+});
+</script>
+</body>
+</html>
