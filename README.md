@@ -66,13 +66,10 @@ make clean all FC=ifort
 > Note: Under Linux (or MacOS), before the first use, make sure to give appropriate execution rights to the program. For instance you may run:
 >```chmod +x baypass```
 
-### Install hapFLK, SelEstim, SweeD
-
-**TO COMPLETE** by B Servin, R Vitalis, and P Pavlidis.
 
 #### Install hapFLK
 
-hapflk is available as a python package. It has been tested to work on Linux and MacOSX. Before installing hapflk, you will need to install [python 2.7](https://www.python.org/downloads/) and [numpy and scipy](https://www.scipy.org/install.html). You also need a C compiler (/e.g./ gcc) but this should be the case already. Once this is done, hapflk can be installed using pip (copy paste the following in a terminal):
+hapflk is available as a python package. It has been tested to work on Linux and MacOSX. Before installing hapflk, you will need to install [python 2.7](https://www.python.org/downloads/) and [numpy and scipy](https://www.scipy.org/install.html). You also need a C compiler (e.g. gcc) but this should be the case already. Once this is done, hapflk can be installed using pip (copy paste the following in a terminal):
 
 ```
 sudo pip install hapflk
@@ -86,6 +83,11 @@ sudo pip install hapflk --upgrade
 
 Checkout the [hapflk webpage](https://forge-dga.jouy.inra.fr/projects/hapflk/)
 for some documentation and companion scripts.
+
+
+### Install  SelEstim, SweeD
+
+**TO COMPLETE** by  R Vitalis, and P Pavlidis.
 
 ##  2. Download datasets
 
