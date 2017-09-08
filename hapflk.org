@@ -3,7 +3,7 @@
 #+REVEAL_TRANS: none
 #+REVEAL_THEME: beige
 #+REVEAL_PLUGINS: (highlight)
-#+REVEAL_EXTRA_CSS: ./mystyle.css
+#+REVEAL_EXTRA_CSS: mystyle.css
 #+OPTIONS: reveal_center:nil timestamp:nil email:t
 #+LaTeX_HEADER: \usepackage{tikz}
 #+PROPERTY: header-args:latex+ :packages '(("" "tikz"))
