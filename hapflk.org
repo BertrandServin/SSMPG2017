@@ -129,7 +129,6 @@ If we had a set of loci with identical $p_0$:
 #+RESULTS:
 [[file:practical/hapflk/startree.png]]
 
-[[file:practical/hapflk/startree.png]]
 #+REVEAL_HTML: </div>
 
 $F$ characterizes the amount of drift since ancestral split:
@@ -160,8 +159,6 @@ shared across (neutral) loci:  estimated by considering all loci.
 #+end_src
 
 #+RESULTS:
-[[file:practical/hapflk/tree.png]]
-
 [[file:practical/hapflk/tree.png]]
 
 #+REVEAL_HTML: </div>
