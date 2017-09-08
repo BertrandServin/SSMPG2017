@@ -129,6 +129,7 @@ If we had a set of loci with identical $p_0$:
 #+RESULTS:
 [[file:practical/hapflk/startree.png]]
 
+[[file:practical/hapflk/startree.png]]
 #+REVEAL_HTML: </div>
 
 $F$ characterizes the amount of drift since ancestral split:
@@ -142,7 +143,7 @@ shared across (neutral) loci:  estimated by considering all loci.
 
 #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
 #+header: :file (by-backend (latex "tree.tikz") (t "practical/hapflk/tree.png"))
-#+begin_src latex :results raw graphics
+#+begin_src latex :results raw graphics :exports results
   \begin{tikzpicture}[scale=2.0]                                                       
     % \draw (1,0) grid (5,7);                                                
     \draw[very thick] (3,7) -- (1,2);                                       
@@ -157,6 +158,12 @@ shared across (neutral) loci:  estimated by considering all loci.
     \draw (3,0.5) node {\Huge $\mathbf{Cov(p_1,p_2)}=\mathbf{\textcolor{red}{f_{12}}}p_0(1-p_0)$}  ;
   \end{tikzpicture} 
 #+end_src
+
+#+RESULTS:
+[[file:practical/hapflk/tree.png]]
+
+[[file:practical/hapflk/tree.png]]
+
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
