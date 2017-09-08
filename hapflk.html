@@ -11,7 +11,7 @@
 
 <link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/beige.css" id="theme"/>
 
-<link rel="stylesheet" href="./mystyle.css"/>
+<link rel="stylesheet" href="mystyle.css"/>
 <link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css"/>
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
@@ -32,8 +32,28 @@
 </section>
 
 <section>
-<section id="slide-org9061b14">
-<h2 id="org9061b14">Principle of the (hap)FLK tests</h2>
+<section id="slide-org114ed6d">
+<h2 id="org114ed6d">Resources</h2>
+<ul>
+<li>You can access this document as an HTML presentation <a href="http://htmlpreview.github.io/?https://github.com/BertrandServin/SSMPG2017/blob/master/hapflk.html">here</a>.</li>
+<li>The hapFLK webpage is <a href="https://forge-dga.jouy.inra.fr/projects/hapflk">here</a></li>
+<li>The hapflk software is available on <a href="https://pypi.python.org/pypi/hapflk">Pypi</a>.</li>
+<li>Associated papers are:
+<ul>
+<li><a href="http://www.genetics.org/content/193/3/929.abstract">Fariello et al., 2013, Detecting Signatures of Selection Through Haplotype Differentiation Among Hierarchically Structured Populations. Genetics 193(3):929-941.</a></li>
+<li><a href="http://www.genetics.org/content/186/1/241.abstract">Bonhomme et al., 2010, Detecting selection in population trees:
+The Lewontin and Krakauer test extended. Genetics 186(1) 241-262</a></li>
+
+</ul></li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgcb5e307">
+<h2 id="orgcb5e307">Principle of the (hap)FLK tests</h2>
 <ul>
 <li>FLK and hapFLK are tests aimed at detecting selection based on
 population differentiation</li>
@@ -48,8 +68,8 @@ group of populations evolving under drift.</li>
 </ul>
 
 </section>
-<section id="slide-orge25d8eb">
-<h3 id="orge25d8eb">Neutral model in a single population</h3>
+<section id="slide-orge642804">
+<h3 id="orge642804">Neutral model in a single population</h3>
 <p>
 Consider the trajectory of an allele through time in a population of
 finite size 
@@ -97,8 +117,8 @@ The variance of the final frequencies depends on:
 </div>
 
 </section>
-<section id="slide-org2aa746d">
-<h3 id="org2aa746d">Neutral model in multiple populations</h3>
+<section id="slide-org9f2657d">
+<h3 id="org9f2657d">Neutral model in multiple populations</h3>
 <div class="column" style="float:right; width: 60%">
 <p>
 If we had a set of loci with identical \(p_0\):
@@ -132,8 +152,8 @@ shared across (neutral) loci:  estimated by considering all loci.
 </p>
 
 </section>
-<section id="slide-org7115b10">
-<h4 id="org7115b10">Real life is more complex</h4>
+<section id="slide-org8847604">
+<h4 id="org8847604">Real life is more complex</h4>
 <ul>
 <li>Populations have different sizes</li>
 <li>Successive splits: some populations share ancestry <b>after</b> the
@@ -160,10 +180,14 @@ ancestral population.</li>
 </div>
 
 </section>
+<section id="slide-org04a6794">
+<h4 id="org04a6794">Exploiting Linkage Disequilibrium: hapFLK</h4>
+
+</section>
 </section>
 <section>
-<section id="slide-orgd8c8275">
-<h2 id="orgd8c8275">Software overview</h2>
+<section id="slide-org3d18bb8">
+<h2 id="org3d18bb8">Software overview</h2>
 <ul>
 <li><code>hapflk</code> is a python program that is meant to be used on the command
 line.</li>
@@ -177,8 +201,8 @@ of an individual</li>
 </section>
 </section>
 <section>
-<section id="slide-orgf63dfa5">
-<h2 id="orgf63dfa5">Practical</h2>
+<section id="slide-org10b65f6">
+<h2 id="org10b65f6">Practical</h2>
 <p>
 For this practical we will analyse data from
 <a href="http://www.sheephapmap.org/hapmap.php">The SheepHapMap project</a>. First download the data:
@@ -197,8 +221,8 @@ For this practical we will analyse data from
 
 </ul>
 </section>
-<section id="slide-orgbc0fbb1">
-<h3 id="orgbc0fbb1">Estimating population history from SNP data</h3>
+<section id="slide-org95263f9">
+<h3 id="org95263f9">Estimating population history from SNP data</h3>
 <p>
 The first task will be aimed at running hapflk in SNP mode, to:
 </p>
@@ -387,8 +411,8 @@ lines(xx,dchisq(xx,df=5),lwd=2,col=2)
 </div>
 </div>
 </section>
-<section id="slide-org03aa9a1">
-<h3 id="org03aa9a1">Running hapFLK on a (bit of) chromosome</h3>
+<section id="slide-orgd2ea9a2">
+<h3 id="orgd2ea9a2">Running hapFLK on a (bit of) chromosome</h3>
 <ul>
 <li>hapFLK is a test based on LD patterns.</li>
 <li>LD patterns are relevant within linked markers</li>

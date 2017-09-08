@@ -14,6 +14,17 @@
 #+Email: bertrand.servin@inra.fr
 #+DATE: SSMPG Sept. 11-15 2017, Aussois, France
 
+* Resources
+
+- You can access this document as an HTML presentation [[http://htmlpreview.github.io/?https://github.com/BertrandServin/SSMPG2017/blob/master/hapflk.html][here]].  
+- The hapFLK webpage is [[https://forge-dga.jouy.inra.fr/projects/hapflk][here]]
+- The hapflk software is available on [[https://pypi.python.org/pypi/hapflk][Pypi]].
+- Associated papers are:
+  - [[http://www.genetics.org/content/193/3/929.abstract][Fariello et al., 2013, Detecting Signatures of Selection Through Haplotype Differentiation Among Hierarchically Structured Populations. Genetics 193(3):929-941.]]
+  - [[http://www.genetics.org/content/186/1/241.abstract][Bonhomme et al., 2010, Detecting selection in population trees:
+    The Lewontin and Krakauer test extended. Genetics 186(1) 241-262]]
+
+
 * Principle of the (hap)FLK tests
 
 - FLK and hapFLK are tests aimed at detecting selection based on
