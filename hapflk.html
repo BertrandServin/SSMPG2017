@@ -32,8 +32,8 @@
 </section>
 
 <section>
-<section id="slide-org9aaa87a">
-<h2 id="org9aaa87a">Resources</h2>
+<section id="slide-org4a8a728">
+<h2 id="org4a8a728">Resources</h2>
 <ul>
 <li>You can access this document as an HTML presentation <a href="http://htmlpreview.github.io/?https://github.com/BertrandServin/SSMPG2017/blob/master/hapflk.html">here</a>.</li>
 <li>The hapFLK webpage is <a href="https://forge-dga.jouy.inra.fr/projects/hapflk">here</a></li>
@@ -52,8 +52,8 @@ The Lewontin and Krakauer test extended. Genetics 186(1) 241-262</a></li>
 </section>
 </section>
 <section>
-<section id="slide-org9d63e87">
-<h2 id="org9d63e87">Principle of the (hap)FLK tests</h2>
+<section id="slide-org2e9fc9e">
+<h2 id="org2e9fc9e">Principle of the (hap)FLK tests</h2>
 <ul>
 <li>FLK and hapFLK are tests aimed at detecting selection based on
 population differentiation</li>
@@ -69,8 +69,8 @@ group of populations evolving under drift.</li>
 </ul>
 
 </section>
-<section id="slide-org494756e">
-<h3 id="org494756e">Neutral model in a single population</h3>
+<section id="slide-org6d7af21">
+<h3 id="org6d7af21">Neutral model in a single population</h3>
 <p>
 Consider the trajectory of an allele through time in a population of
 finite size 
@@ -118,8 +118,8 @@ The variance of the final frequencies depends on:
 </div>
 
 </section>
-<section id="slide-org917d055">
-<h3 id="org917d055">Neutral model in multiple populations</h3>
+<section id="slide-orgc6a270f">
+<h3 id="orgc6a270f">Neutral model in multiple populations</h3>
 <div class="column" style="float:right; width: 60%">
 <p>
 If we had a set of loci with identical \(p_0\):
@@ -153,8 +153,8 @@ shared across (neutral) loci:  estimated by considering all loci.
 </p>
 
 </section>
-<section id="slide-orgdef3548">
-<h4 id="orgdef3548">A more general scenario</h4>
+<section id="slide-orgddcc944">
+<h4 id="orgddcc944">A more general scenario</h4>
 <ul>
 <li>Populations have different sizes</li>
 <li>Successive splits: some populations share ancestry <b>after</b> the
@@ -181,8 +181,8 @@ ancestral population.</li>
 </div>
 
 </section>
-<section id="slide-org4fcbef0">
-<h4 id="org4fcbef0">Exploiting Linkage Disequilibrium: hapFLK</h4>
+<section id="slide-org4c65b46">
+<h4 id="org4c65b46">Exploiting Linkage Disequilibrium: hapFLK</h4>
 <div class="column" style="float:left; width: 50%">
 
 
@@ -203,8 +203,8 @@ effects of recombination</li>
 </div>
 
 </section>
-<section id="slide-org4add256">
-<h4 id="org4add256">the hapFLK test</h4>
+<section id="slide-org5ae0650">
+<h4 id="org5ae0650">the hapFLK test</h4>
 <ul>
 <li>Principle:
 <ul>
@@ -227,8 +227,8 @@ effects of recombination</li>
 </section>
 </section>
 <section>
-<section id="slide-org5d1c32e">
-<h2 id="org5d1c32e">Software overview</h2>
+<section id="slide-org44b1e5b">
+<h2 id="org44b1e5b">Software overview</h2>
 <ul>
 <li><code>hapflk</code> is a python program that is meant to be used on the command
 line.</li>
@@ -242,8 +242,8 @@ of an individual</li>
 </section>
 </section>
 <section>
-<section id="slide-orgddfe455">
-<h2 id="orgddfe455">Practical</h2>
+<section id="slide-org9303cb9">
+<h2 id="org9303cb9">Practical</h2>
 <p>
 For this practical we will analyse data from
 <a href="http://www.sheephapmap.org/hapmap.php">The SheepHapMap project</a>. First download the data:
@@ -252,7 +252,9 @@ For this practical we will analyse data from
 
 <pre><code class="sh" >mkdir -p practical/hapflk/data/
 ## get input files into practical directory (TODO)
-##wget ...
+wget -P practical/hapflk/data http://genoweb.toulouse.inra.fr/~servin/data/NEU.fam 
+wget -P practical/hapflk/data http://genoweb.toulouse.inra.fr/~servin/data/NEU.bim
+wget -P practical/hapflk/data http://genoweb.toulouse.inra.fr/~servin/data/NEU.bed
 </code></pre>
 </div>
 
@@ -262,8 +264,8 @@ For this practical we will analyse data from
 
 </ul>
 </section>
-<section id="slide-org2da47fe">
-<h3 id="org2da47fe">Estimating population history from SNP data calculating FLK</h3>
+<section id="slide-org9f9fc4d">
+<h3 id="org9f9fc4d">Estimating population history from SNP data calculating FLK</h3>
 <p>
 The first task will be aimed at running hapflk in SNP mode, to:
 </p>
@@ -452,8 +454,8 @@ lines(xx,dchisq(xx,df=5),lwd=2,col=2)
 </div>
 </div>
 </section>
-<section id="slide-orgdf42a47">
-<h3 id="orgdf42a47">Running hapFLK on a (bit of) chromosome</h3>
+<section id="slide-org9769271">
+<h3 id="org9769271">Running hapFLK on a (bit of) chromosome</h3>
 <ul>
 <li>hapFLK is a test based on LD patterns.</li>
 <li>LD patterns are relevant for linked markers</li>
@@ -472,8 +474,8 @@ region of a chromosome</li>
 </div>
 
 </section>
-<section id="slide-org1fc43d4">
-<h4 id="org1fc43d4">Launching and hapFLK run</h4>
+<section id="slide-org7291f3e">
+<h4 id="org7291f3e">Launching and hapFLK run</h4>
 <p>
 As for FLK, hapFLK must be calculated using a kinship matrix
 <b>estimated genome-wide</b>. 
@@ -519,8 +521,8 @@ you are doing).</li>
 </ul>
 
 </section>
-<section id="slide-org70c5309">
-<h4 id="org70c5309">hapFLK output files</h4>
+<section id="slide-org2babe1d">
+<h4 id="org2babe1d">hapFLK output files</h4>
 <div class="column" style="float:left; width: 50%">
 <div class="org-src-container">
 
@@ -554,8 +556,8 @@ populations</li>
 </div>
 
 </section>
-<section id="slide-org9e0d21c">
-<h4 id="org9e0d21c">FLK and hapFLK</h4>
+<section id="slide-org4ae6f05">
+<h4 id="org4ae6f05">FLK and hapFLK</h4>
 <div class="org-src-container">
 
 <pre><code class="R" >flk=read.table('practical/hapflk/mstn.flk',h=T)
@@ -589,8 +591,8 @@ on the hapFLK website.
 </p>
 
 </section>
-<section id="slide-org89ac5e4">
-<h4 id="org89ac5e4">Local cluster plots</h4>
+<section id="slide-org3084270">
+<h4 id="org3084270">Local cluster plots</h4>
 <p>
 The <a href="https://forge-dga.jouy.inra.fr/attachments/download/2919/hapflk-clusterplot.R">hapflk-clusterplot.R</a> script  produces local cluster plots.
 </p>
@@ -608,8 +610,8 @@ hapflk-clusterplot.R practical/hapflk/mstn.kfrq.fit_0.bz2
 </div>
 
 </section>
-<section id="slide-orgcc436e3">
-<h4 id="orgcc436e3">Local population trees</h4>
+<section id="slide-org2798d78">
+<h4 id="org2798d78">Local population trees</h4>
 <p>
 Keep the tree structure but reesimates branch length. Use
 <a href="https://forge-dga.jouy.inra.fr/attachments/download/3248/local_reynolds.py"><code>local_reynolds.py</code></a> and <a href="https://forge-dga.jouy.inra.fr/attachments/download/3272/local_trees.R"><code>local_trees.R</code></a>
