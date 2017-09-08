@@ -5,25 +5,27 @@
 #+REVEAL_PLUGINS: (highlight)
 #+REVEAL_EXTRA_CSS: ./mystyle.css
 #+OPTIONS: reveal_center:nil timestamp:nil email:t
+#+LaTeX_HEADER: \usepackage{tikz}
+#+PROPERTY: header-args:latex+ :packages '(("" "tikz"))
+#+PROPERTY: header-args:latex+ :imagemagick yes :fit yes
+#+LaTeX_HEADER:  \usetikzlibrary{shapes,arrows}
 #+Title: hapFLK: a gentle introduction
 #+Author: Bertrand Servin
 #+Email: bertrand.servin@inra.fr
 #+DATE: SSMPG Sept. 11-15 2017, Aussois, France
-
 
 * Principle of the (hap)FLK tests
 
 - FLK and hapFLK are tests aimed at detecting selection based on
   population differentiation
 - The principle is:
-  1. Model the expected differences in allele frequencies betwen a
-     group of populations
-  2. Evaluate if "observed" differences at a particular locus are
-     consistent with this model.
+  1. *Model  differences in allele frequencies* betwen a
+     group of populations evolving under drift.
+  2. At a given locus: *Are observed differences with this model ?* = test for seleciton at this locus.
 
-** Rationale
+** Neutral model in a single population
 Consider the trajectory of an allele through time in a population of
-finite size (here N=200)
+finite size 
 #+BEGIN_SRC R :session principle :exports none
 source('DiffusionWF.R')
 #+END_SRC
@@ -84,6 +86,9 @@ frequency $p_0$.
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 60%">
+
+$$E(p) = p_0$$
+
 The variance of the final frequencies depends on:
 - The number of generations (t)
 - The population size (N)
@@ -91,6 +96,117 @@ The variance of the final frequencies depends on:
 
 $$Var(p) \approx \frac{t}{2N} p_0(1-p_0)$$
 #+REVEAL_HTML: </div>
+
+** Neutral model in multiple populations
+#+REVEAL_HTML: <div class="column" style="float:right; width: 60%">
+If we had a set of loci with identical $p_0$:
+- we could estimate \(F \approx \frac{t}{2N}\) and
+- characterize the distribution of allele frequencies under Neutral
+  evolution.
+
+
+ *Considering the same locus in a set of populations achieves this.*
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 40%">
+#+header: :file (by-backend (latex "startree.tikz") (t "practical/hapflk/startree.png"))
+#+begin_src latex :results raw graphics
+ \begin{tikzpicture}[scale=2]
+        \draw[very thick] (3,7) -- (1,2);
+        \draw[very thick] (3,7) -- (3,2);
+        \draw[very thick] (3,7) -- (5,2);
+        \draw[below] (1,2) node {\Huge 1};
+        \draw[below] (3,2) node {\Huge 2};
+        \draw[below] (5,2) node {\Huge 3};
+        \draw[above] (2,5) node {\Huge $F_1$};
+        \draw[left] (3,4) node {\Huge $F_2$};
+        \draw[above] (4,5) node {\Huge $F_3$};
+        \draw (3,1) node {\Huge $F_1=F_2=F_3=F_{ST}$} ;
+      \end{tikzpicture}
+#+end_src
+
+#+RESULTS:
+[[file:practical/hapflk/startree.png]]
+
+#+REVEAL_HTML: </div>
+
+$F$ characterizes the amount of drift since ancestral split:
+shared across (neutral) loci:  estimated by considering all loci.
+
+*** Real life is more complex
+
+- Populations have different sizes
+- Successive splits: some populations share ancestry *after* the
+  ancestral population.
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+#+header: :file (by-backend (latex "tree.tikz") (t "practical/hapflk/tree.png"))
+#+begin_src latex :results raw graphics
+  \begin{tikzpicture}[scale=2.0]                                                       
+    % \draw (1,0) grid (5,7);                                                
+    \draw[very thick] (3,7) -- (1,2);                                       
+    \draw[very thick] (2,4.5) -- (3,2);                                     
+    \draw[very thick] (3,7) -- (4.5,3);                                     
+    \draw[ultra thick, red] (2,4.5) -- (3,7);                               
+    \draw[above left,red] (2.5,5.7) node {\Huge $f_{12}$};                        
+    \draw[below] (1,2) node {\Huge 1};                                            
+    \draw[below] (3,2) node {\Huge 2};                                            
+    \draw[below] (4.5,3) node {\huge 3};                                          
+    \draw (3,1) node {\Huge $\mathbf{Var(p_1)}=\mathbf{\textcolor{red}{F_1}}p_0(1\-p_0)$} ;
+    \draw (3,0.5) node {\Huge $\mathbf{Cov(p_1,p_2)}=\mathbf{\textcolor{red}{f_{12}}}p_0(1-p_0)$}  ;
+  \end{tikzpicture} 
+#+end_src
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+#+header: :width 4 :height 4 :units "in" :res 100  :bg "transparent"
+#+BEGIN_SRC R :session principle :exports results :results output graphics :file practical/hapflk/covptraj.png
+  N=1000
+  n=100
+
+  nsplit=75
+
+  ## we cheat a little to make a nice graph by putting a small coef. s
+  X3=WFtrajectoires(0.5,N,n,s=-0.02)[-1,1]
+
+  X12=WFtrajectoires(0.5,N,nsplit,s=0.01)[-1,1]
+  X1=c(X12,WFtrajectoires(X12[nsplit],N,n-nsplit,s=-0.02)[-1,1])
+  X2=c(X12,WFtrajectoires(X12[nsplit],N,n-nsplit,s=0.02)[-1,1])
+
+  plot(X3,type='l',
+       ylim=c(0,1),lwd=2,
+       axes=F,
+       ylab='Allele frequency',
+       xlab='t (generations)')
+
+  lines(X1,lwd=2)
+  lines(X2,lwd=2)
+  lines(X12,lwd=2,col='red')
+
+  axis(1)
+  axis(2)
+  ## p0
+  points(0,0.5,pch=19,col=2)
+  text(0,0.6,expression(p[0]),adj=0,col=2)
+
+  points(n,X3[n],pch=19)
+  points(n,X2[n],pch=19)
+  points(n,X1[n],pch=19)
+
+  text(n+5,X3[n],expression(p[3]),adj=0,xpd=T)
+  text(n+5,X2[n],expression(p[2]),adj=0,xpd=T)
+  text(n+5,X1[n],expression(p[1]),adj=0,xpd=T)
+
+  length(X3)
+#+END_SRC
+
+#+RESULTS:
+[[file:practical/hapflk/covptraj.png]]
+
+#+REVEAL_HTML: </div>
+
+*** Exploiting Linkage Disequilibrium: hapFLK
 
 * Software overview
   - =hapflk= is a python program that is meant to be used on the command
@@ -214,4 +330,17 @@ distribution of FLK is close to a $\chi^2(5)$
 #+END_SRC
 
 
+
+
+
+
+* setup :noexport:
+#+name: setup
+#+begin_src emacs-lisp :results silent :exports none
+  (defmacro by-backend (&rest body)
+    `(case (if (boundp 'backend) (org-export-backend-name backend) nil) ,@body))
+#+end_src
+# Local variables:
+# eval: (org-sbe "setup")
+# End:
 

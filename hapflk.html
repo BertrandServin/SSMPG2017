@@ -31,19 +31,139 @@
 <section id="sec-title-slide"><h1 class="title">hapFLK: a gentle introduction</h1><h2 class="author">Bertrand Servin</h2><h2 class="email"><a href="mailto:bertrand.servin@inra.fr">bertrand.servin@inra.fr</a></h2><h2 class="date">SSMPG Sept. 11-15 2017, Aussois, France</h2>
 </section>
 
-
 <section>
-<section id="slide-org5718ab6">
-<h2 id="org5718ab6">Principle of the (hap)FLK tests</h2>
+<section id="slide-org9061b14">
+<h2 id="org9061b14">Principle of the (hap)FLK tests</h2>
+<ul>
+<li>FLK and hapFLK are tests aimed at detecting selection based on
+population differentiation</li>
+<li>The principle is:
+<ol>
+<li><b>Model  differences in allele frequencies</b> betwen a
+group of populations evolving under drift.</li>
+<li>At a given locus: <b>Are observed differences with this model ?</b> = test for seleciton at this locus.</li>
+
+</ol></li>
+
+</ul>
+
+</section>
+<section id="slide-orge25d8eb">
+<h3 id="orge25d8eb">Neutral model in a single population</h3>
 <p>
-This is the principle section
+Consider the trajectory of an allele through time in a population of
+finite size 
+</p>
+
+<div class="figure">
+<p><img src="practical/hapflk/ptraj.png" alt="ptraj.png" />
+</p>
+</div>
+
+</section>
+<section >
+
+<p>
+If we were to look at many loci starting from the same initial
+frequency \(p_0\). 
+</p>
+<div class="column" style="float:left; width: 40%">
+
+<div class="figure">
+<p><img src="practical/hapflk/ptrajmulti.png" alt="ptrajmulti.png" />
+</p>
+</div>
+</div>
+
+<div class="column" style="float:right; width: 60%">
+
+<p>
+\[E(p) = p_0\]
+</p>
+
+<p>
+The variance of the final frequencies depends on:
+</p>
+<ul>
+<li>The number of generations (t)</li>
+<li>The population size (N)</li>
+<li>The initial allele frequency (\(p_0\))</li>
+
+</ul>
+
+<p>
+\[Var(p) \approx \frac{t}{2N} p_0(1-p_0)\]
+</p>
+</div>
+
+</section>
+<section id="slide-org2aa746d">
+<h3 id="org2aa746d">Neutral model in multiple populations</h3>
+<div class="column" style="float:right; width: 60%">
+<p>
+If we had a set of loci with identical \(p_0\):
+</p>
+<ul>
+<li>we could estimate \(F \approx \frac{t}{2N}\) and</li>
+<li>characterize the distribution of allele frequencies under Neutral
+evolution.</li>
+
+</ul>
+
+
+<p>
+<b>Considering the same locus in a set of populations achieves this.</b>
+</p>
+
+</div>
+
+<div class="column" style="float:right; width: 40%">
+
+<div class="figure">
+<p><img src="practical/hapflk/startree.png" alt="startree.png" />
+</p>
+</div>
+
+</div>
+
+<p>
+\(F\) characterizes the amount of drift since ancestral split:
+shared across (neutral) loci:  estimated by considering all loci.
 </p>
 
 </section>
+<section id="slide-org7115b10">
+<h4 id="org7115b10">Real life is more complex</h4>
+<ul>
+<li>Populations have different sizes</li>
+<li>Successive splits: some populations share ancestry <b>after</b> the
+ancestral population.</li>
+
+</ul>
+
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="practical/hapflk/tree.png" alt="tree.png" />
+</p>
+</div>
+
+</div>
+
+<div class="column" style="float:right; width: 50%">
+
+<div class="figure">
+<p><img src="practical/hapflk/covptraj.png" alt="covptraj.png" />
+</p>
+</div>
+
+</div>
+
+</section>
 </section>
 <section>
-<section id="slide-org33d3c6c">
-<h2 id="org33d3c6c">Software overview</h2>
+<section id="slide-orgd8c8275">
+<h2 id="orgd8c8275">Software overview</h2>
 <ul>
 <li><code>hapflk</code> is a python program that is meant to be used on the command
 line.</li>
@@ -57,8 +177,8 @@ of an individual</li>
 </section>
 </section>
 <section>
-<section id="slide-org5becee7">
-<h2 id="org5becee7">Practical</h2>
+<section id="slide-orgf63dfa5">
+<h2 id="orgf63dfa5">Practical</h2>
 <p>
 For this practical we will analyse data from
 <a href="http://www.sheephapmap.org/hapmap.php">The SheepHapMap project</a>. First download the data:
@@ -77,8 +197,8 @@ For this practical we will analyse data from
 
 </ul>
 </section>
-<section id="slide-org903b5b6">
-<h3 id="org903b5b6">Estimating population history from SNP data</h3>
+<section id="slide-orgbc0fbb1">
+<h3 id="orgbc0fbb1">Estimating population history from SNP data</h3>
 <p>
 The first task will be aimed at running hapflk in SNP mode, to:
 </p>
@@ -267,8 +387,8 @@ lines(xx,dchisq(xx,df=5),lwd=2,col=2)
 </div>
 </div>
 </section>
-<section id="slide-orgdad47e1">
-<h3 id="orgdad47e1">Running hapFLK on a (bit of) chromosome</h3>
+<section id="slide-org03aa9a1">
+<h3 id="org03aa9a1">Running hapFLK on a (bit of) chromosome</h3>
 <ul>
 <li>hapFLK is a test based on LD patterns.</li>
 <li>LD patterns are relevant within linked markers</li>
