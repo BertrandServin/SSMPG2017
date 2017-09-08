@@ -111,7 +111,7 @@ If we had a set of loci with identical $p_0$:
 
 #+REVEAL_HTML: <div class="column" style="float:right; width: 40%">
 #+header: :file (by-backend (latex "startree.tikz") (t "practical/hapflk/startree.png"))
-#+begin_src latex :results raw graphics
+#+begin_src latex :results raw graphics :exports results
  \begin{tikzpicture}[scale=2]
         \draw[very thick] (3,7) -- (1,2);
         \draw[very thick] (3,7) -- (3,2);
