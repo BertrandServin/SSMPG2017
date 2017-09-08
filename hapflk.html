@@ -32,8 +32,8 @@
 </section>
 
 <section>
-<section id="slide-org114ed6d">
-<h2 id="org114ed6d">Resources</h2>
+<section id="slide-org9aaa87a">
+<h2 id="org9aaa87a">Resources</h2>
 <ul>
 <li>You can access this document as an HTML presentation <a href="http://htmlpreview.github.io/?https://github.com/BertrandServin/SSMPG2017/blob/master/hapflk.html">here</a>.</li>
 <li>The hapFLK webpage is <a href="https://forge-dga.jouy.inra.fr/projects/hapflk">here</a></li>
@@ -52,8 +52,8 @@ The Lewontin and Krakauer test extended. Genetics 186(1) 241-262</a></li>
 </section>
 </section>
 <section>
-<section id="slide-orgcb5e307">
-<h2 id="orgcb5e307">Principle of the (hap)FLK tests</h2>
+<section id="slide-org9d63e87">
+<h2 id="org9d63e87">Principle of the (hap)FLK tests</h2>
 <ul>
 <li>FLK and hapFLK are tests aimed at detecting selection based on
 population differentiation</li>
@@ -61,15 +61,16 @@ population differentiation</li>
 <ol>
 <li><b>Model  differences in allele frequencies</b> betwen a
 group of populations evolving under drift.</li>
-<li>At a given locus: <b>Are observed differences with this model ?</b> = test for seleciton at this locus.</li>
+<li>At a given locus: <b>Are observed differences with this model ?</b> = test for selection at this locus.</li>
+<li>Single SNP test: FLK / LD-based test : hapFLK</li>
 
 </ol></li>
 
 </ul>
 
 </section>
-<section id="slide-orge642804">
-<h3 id="orge642804">Neutral model in a single population</h3>
+<section id="slide-org494756e">
+<h3 id="org494756e">Neutral model in a single population</h3>
 <p>
 Consider the trajectory of an allele through time in a population of
 finite size 
@@ -117,8 +118,8 @@ The variance of the final frequencies depends on:
 </div>
 
 </section>
-<section id="slide-org9f2657d">
-<h3 id="org9f2657d">Neutral model in multiple populations</h3>
+<section id="slide-org917d055">
+<h3 id="org917d055">Neutral model in multiple populations</h3>
 <div class="column" style="float:right; width: 60%">
 <p>
 If we had a set of loci with identical \(p_0\):
@@ -152,8 +153,8 @@ shared across (neutral) loci:  estimated by considering all loci.
 </p>
 
 </section>
-<section id="slide-org8847604">
-<h4 id="org8847604">Real life is more complex</h4>
+<section id="slide-orgdef3548">
+<h4 id="orgdef3548">A more general scenario</h4>
 <ul>
 <li>Populations have different sizes</li>
 <li>Successive splits: some populations share ancestry <b>after</b> the
@@ -180,14 +181,54 @@ ancestral population.</li>
 </div>
 
 </section>
-<section id="slide-org04a6794">
-<h4 id="org04a6794">Exploiting Linkage Disequilibrium: hapFLK</h4>
+<section id="slide-org4fcbef0">
+<h4 id="org4fcbef0">Exploiting Linkage Disequilibrium: hapFLK</h4>
+<div class="column" style="float:left; width: 50%">
+
+
+<div class="figure">
+<p><img src="practical/hapflk/fastphase.png" alt="fastphase.png" /> 
+</p>
+</div>
+</div>
+<div class="column" style="float:right; width: 50%">
+<ul>
+<li>hapFLK uses the  <a href="https://www.ncbi.nlm.nih.gov/pubmed/16532393">Scheet and Stephens LD model</a> .</li>
+<li>Models local similarity between haplotypes via reduction of
+dimension: <b>local haplotype clusters</b></li>
+<li>Definition of clusters change along the chromosome: accounts for the
+effects of recombination</li>
+
+</ul>
+</div>
+
+</section>
+<section id="slide-org4add256">
+<h4 id="org4add256">the hapFLK test</h4>
+<ul>
+<li>Principle:
+<ul>
+<li>Consider clusters as alleles</li>
+<li>Estimate haplotype cluster frequencies</li>
+<li>Test if differences in allele frequencies fit a neutral model.</li>
+
+</ul></li>
+<li>Advantages of using this LD model:
+<ul>
+<li>No need for sliding windows</li>
+<li>Can be estimated on unphased genotype data</li>
+<li>Admits missing data</li>
+
+</ul></li>
+<li><b>The null distribution of hapFLK is not known but can be approximated from the data</b></li>
+
+</ul>
 
 </section>
 </section>
 <section>
-<section id="slide-org3d18bb8">
-<h2 id="org3d18bb8">Software overview</h2>
+<section id="slide-org5d1c32e">
+<h2 id="org5d1c32e">Software overview</h2>
 <ul>
 <li><code>hapflk</code> is a python program that is meant to be used on the command
 line.</li>
@@ -201,8 +242,8 @@ of an individual</li>
 </section>
 </section>
 <section>
-<section id="slide-org10b65f6">
-<h2 id="org10b65f6">Practical</h2>
+<section id="slide-orgddfe455">
+<h2 id="orgddfe455">Practical</h2>
 <p>
 For this practical we will analyse data from
 <a href="http://www.sheephapmap.org/hapmap.php">The SheepHapMap project</a>. First download the data:
@@ -221,8 +262,8 @@ For this practical we will analyse data from
 
 </ul>
 </section>
-<section id="slide-org95263f9">
-<h3 id="org95263f9">Estimating population history from SNP data</h3>
+<section id="slide-org2da47fe">
+<h3 id="org2da47fe">Estimating population history from SNP data calculating FLK</h3>
 <p>
 The first task will be aimed at running hapflk in SNP mode, to:
 </p>
@@ -411,12 +452,12 @@ lines(xx,dchisq(xx,df=5),lwd=2,col=2)
 </div>
 </div>
 </section>
-<section id="slide-orgd2ea9a2">
-<h3 id="orgd2ea9a2">Running hapFLK on a (bit of) chromosome</h3>
+<section id="slide-orgdf42a47">
+<h3 id="orgdf42a47">Running hapFLK on a (bit of) chromosome</h3>
 <ul>
 <li>hapFLK is a test based on LD patterns.</li>
-<li>LD patterns are relevant within linked markers</li>
-<li>So hapFLK needs to be calculated independantly for each chromosome :)</li>
+<li>LD patterns are relevant for linked markers</li>
+<li>So hapFLK needs to be calculated independently for each chromosome :)</li>
 <li>To reduce computation time, we will practice on a small, non random
 region of a chromosome</li>
 <li>We use plink to create our reduced dataset:</li>
@@ -428,6 +469,173 @@ region of a chromosome</li>
       --chr 2 --from-kb 100000 --to-kb 140000\
       --out practical/hapflk/data/mstn --make-bed
 </code></pre>
+</div>
+
+</section>
+<section id="slide-org1fc43d4">
+<h4 id="org1fc43d4">Launching and hapFLK run</h4>
+<p>
+As for FLK, hapFLK must be calculated using a kinship matrix
+<b>estimated genome-wide</b>. 
+</p>
+
+<p>
+When using the LD model, the kinship <b>must</b> be provided.
+</p>
+
+<p>
+hapFLK calculations are turned on by setting a number of haplotype
+clusters using the <code>-K</code> flag.
+</p>
+
+</section>
+<section >
+
+<div class="org-src-container">
+
+<pre><code class="sh" >hapflk --bfile practical/hapflk/data/mstn \
+       --outgroup=Soay \
+       -p practical/hapflk/mstn \
+       --annot \
+       --kinship practical/hapflk/NEU_fij.txt \
+       -K 15 \
+       --nfit=2 \
+       --ncpu=2
+</code></pre>
+</div>
+
+<ul>
+<li><b>-K 15</b>: the number of clusters to model LD. This <b>depends on the
+data</b>. Can be estimated using <a href="http://scheet.org/software.html"><code>fastPHASE</code></a> cross-validation
+proceudre.</li>
+<li><b>&#x2013;annot</b>: turn on the production of output files  to
+annotate the FLK and hapFLK signal. Use when looking at small
+genomic regions (some files can get big !).</li>
+<li><b>&#x2013;nfit=2</b>: this is only used here to reduce computation
+time. <b>Don&rsquo;t do this at home</b> (keep the default unless you know what
+you are doing).</li>
+<li><b>&#x2013;ncpu=2</b>: use more if you can.</li>
+
+</ul>
+
+</section>
+<section id="slide-org70c5309">
+<h4 id="org70c5309">hapFLK output files</h4>
+<div class="column" style="float:left; width: 50%">
+<div class="org-src-container">
+
+<pre><code class="sh" >ls practical/hapflk/mstn*
+</code></pre>
+</div>
+
+<pre class="example">
+practical/hapflk/mstn.eig
+practical/hapflk/mstn.flk
+practical/hapflk/mstn.flk.eig
+practical/hapflk/mstn.frq
+practical/hapflk/mstn.hapflk
+practical/hapflk/mstn.hapflk.eig
+practical/hapflk/mstn.kfrq.fit_0.bz2
+practical/hapflk/mstn.kfrq.fit_1.bz2
+practical/hapflk/mstn.png
+practical/hapflk/mstn.rey
+</pre>
+</div>
+<div class="column" style="float:left; width: 50%">
+<ul>
+<li><code>mstn.flk</code> and <code>mstn.frq</code>: same as before. Sometimes useful (not here).</li>
+<li><code>mstn.hapflk</code>: contains the hapFLK results</li>
+<li><code>mstn.kfrq.fit_{N}.bz2</code>: frequency of haplotype clusters in
+populations</li>
+<li><code>mstn.rey</code>: estimates of local \(F_{_ST}\) between populations</li>
+<li><code>mstn.*.eig</code>: signal decomposition into principal components.</li>
+
+</ul>
+</div>
+
+</section>
+<section id="slide-org9e0d21c">
+<h4 id="org9e0d21c">FLK and hapFLK</h4>
+<div class="org-src-container">
+
+<pre><code class="R" >flk=read.table('practical/hapflk/mstn.flk',h=T)
+hflk=read.table('practical/hapflk/mstn.hapflk',h=T)
+par(mfrow=c(1,2))
+plot(flk$pos,-log10(flk$pvalue), main='FLK',
+     xlab='Position', ylab='-log(p-value)', pch=16)
+plot(hflk$pos,hflk$hapflk,main='hapFLK', type='l', lwd=2,
+     xlab='Position', ylab='hapFLK value')
+</code></pre>
+</div>
+
+
+<div class="figure">
+<p><img src="practical/hapflk/mstn.png" alt="mstn.png" />
+</p>
+</div>
+
+</section>
+<section >
+
+<div class="figure">
+<p><img src="practical/hapflk/mstn.png" alt="mstn.png" />
+</p>
+</div>
+
+<p>
+NB: hapFLK results are not p-values. These can be computed <b>after a
+whole genome scan</b> using the <a href="https://forge-dga.jouy.inra.fr/attachments/download/5765/scaling_chi2_hapflk.py"><code>scaling_chi2_hapflk.py</code></a> script available 
+on the hapFLK website. 
+</p>
+
+</section>
+<section id="slide-org89ac5e4">
+<h4 id="org89ac5e4">Local cluster plots</h4>
+<p>
+The <a href="https://forge-dga.jouy.inra.fr/attachments/download/2919/hapflk-clusterplot.R">hapflk-clusterplot.R</a> script  produces local cluster plots.
+</p>
+<div class="org-src-container">
+
+<pre><code class="sh" >## chmod +x hapflk-clusterplot.R
+hapflk-clusterplot.R practical/hapflk/mstn.kfrq.fit_0.bz2
+</code></pre>
+</div>
+
+
+<div class="figure">
+<p><img src=" practical/hapflk/clusterplot.png" alt="clusterplot.png" width="40%" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgcc436e3">
+<h4 id="orgcc436e3">Local population trees</h4>
+<p>
+Keep the tree structure but reesimates branch length. Use
+<a href="https://forge-dga.jouy.inra.fr/attachments/download/3248/local_reynolds.py"><code>local_reynolds.py</code></a> and <a href="https://forge-dga.jouy.inra.fr/attachments/download/3272/local_trees.R"><code>local_trees.R</code></a>
+</p>
+
+<div class="org-src-container">
+
+<pre><code class="sh" >## chmod +x local_reynolds.py
+cd practical/hapflk/
+local_reynolds.py -p mstn
+## produces two files
+## hapflk_snp_reynolds.txt
+## hapflk_hap_reynolds.txt
+
+## EDIT the local_trees.R script (available on github)
+cd ../../
+R CMD BATCH local_trees.R
+</code></pre>
+</div>
+
+</section>
+<section >
+
+<div class="figure">
+<p><img src="practical/hapflk/localSnpTree.png" alt="localSnpTree.png" width="50%" />
+</p>
 </div>
 </section>
 </section>
